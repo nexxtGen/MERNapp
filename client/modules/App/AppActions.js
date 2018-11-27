@@ -6,13 +6,13 @@ export const TOGGLE_EDIT_POST = 'TOGGLE_EDIT_POST';
 // Export Actions
 export function toggleAddPost() {
   return {
-    type: TOGGLE_ADD_POST,
+    type: TOGGLE_ADD_POST
   };
 }
 
 //add k
 export function toggleEditPost() {
   return {
-    type: TOGGLE_EDIT_POST,
+    type: TOGGLE_EDIT_POST
   };
 }

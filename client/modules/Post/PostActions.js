@@ -65,7 +65,7 @@ export function editPost (cuid, post) {
   return {
     type: EDIT_POST,
     cuid,
-    post,
+    post
   };
 }
 
@@ -75,7 +75,7 @@ export function editPostRequest(cuid, post) {
       post: {
         name: post.name,
         title: post.title,
-        content: post.content,
+        content: post.content
       },
     }).then(() => dispatch(editPost(cuid, post)));
   };

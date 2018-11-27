@@ -6,17 +6,14 @@ import { injectIntl, FormattedMessage } from 'react-intl';  //edited K
 
 // Import Style
 import styles from '../../components/PostListItem/PostListItem.css';
-
 // Import Actions
 import { fetchPost, editPostRequest } from '../../PostActions'; //edited K
-
+import { toggleEditPost } from '../../../App/AppActions';
 // Import Selectors
 import { getPost } from '../../PostReducer';
 //add k
-
 import { getShowEditPost } from '../../../App/AppReducer'
 
-import { toggleEditPost } from '../../../App/AppActions';
 
 export class PostDetailPage extends React.Component {
   constructor(props) {
@@ -24,10 +21,9 @@ export class PostDetailPage extends React.Component {
     this.state = {
       name: this.props.post.name,
       title: this.props.post.title,
-      content: this.props.post.content,
+      content: this.props.post.content,      
     };
   }
-
   
   //add k. metoda obsługująca zmiany zachodzące w każdym z formularzy 
   handleInputChange = (event) => {
@@ -36,11 +32,33 @@ export class PostDetailPage extends React.Component {
     this.setState({
       [name]: value,
     });
-  };
+  }
   // add k.
   handleEditPost = () => {
     this.props.toggleEditPost();
     this.props.editPostRequest(this.state);
+  }
+
+  renderPostForm() {
+    return (
+      <div className={styles['form-content']}>
+        <h2 className={styles['form-title']}><FormattedMessage id="editPost" /></h2>
+        <input placeholder={this.props.intl.messages.authorName} className={styles['form-field']} name="name" value={this.state.name} onChange={this.handleInputChange}/>
+        <input placeholder={this.props.intl.messages.postTitle} className={styles['form-field']} name="title" value={this.state.title} onChange={this.handleInputChange}/>
+        <textarea placeholder={this.props.intl.messages.postContent} className={styles['form-field']} name="content" value={this.state.content} onChange={this.handleInputChange}/>
+        <a className={styles['post-submit-button']} href="#" onClick={this.handleEditPost}><FormattedMessage id="submit" /></a>
+      </div>
+    );
+  }
+
+  renderPost() {
+    return (
+      <div className={`${styles['single-post']} ${styles['post-detail']}`}>
+        <h3 className={styles['post-title']}>{this.props.post.title}</h3>
+        <p className={styles['author-name']}><FormattedMessage id="by" /> {this.props.post.name}</p>
+        <p className={styles['post-desc']}>{this.props.post.content}</p>
+      </div>
+    );
   };
 
   // add k
@@ -57,32 +75,12 @@ export class PostDetailPage extends React.Component {
       </div>
     );
   }
-
-  renderPostForm = () => {
-    return (
-      <div className={styles['form-content']}>
-        <h2 className={styles['form-title']}><FormattedMessage id="editPost" /></h2>
-        <input placeholder={this.props.intl.messages.authorName} className={styles['form-field']} name="name" value={this.state.name} onChange={this.handleInputChange}/>
-        <input placeholder={this.props.intl.messages.postTitle} className={styles['form-field']} name="title" value={this.state.title} onChange={this.handleInputChange}/>
-        <textarea placeholder={this.props.intl.messages.postContent} className={styles['form-field']} name="content" value={this.state.content} onChange={this.handleInputChange}/>
-        <a className={styles['post-submit-button']} href="#" onClick={this.handleEditPost}><FormattedMessage id="submit" /></a>
-      </div>
-    );
-  };
-
-  renderPost = () => {
-    return (
-      <div>        
-        <div className={`${styles['single-post']} ${styles['post-detail']}`}>
-          <h3 className={styles['post-title']}>{props.post.title}</h3>
-          <p className={styles['author-name']}><FormattedMessage id="by" /> {props.post.name}</p>
-          <p className={styles['post-desc']}>{props.post.content}</p>          
-        </div>
-      </div>
-    );
-  }
 }
 
+// Actions required to provide data for this component to render in server side.
+PostDetailPage.need = [params => {
+  return fetchPost(params.cuid);
+}];
 
 // Retrieve data from store as props
 //add k
@@ -92,12 +90,6 @@ function mapStateToProps(state, props) {
     showEditPost: getShowEditPost(state),
   };
 }
-
-// Actions required to provide data for this component to render in server side.
-PostDetailPage.need = [params => {
-  return fetchPost(params.cuid);
-}];
-
 //add K
 function mapDispatchToProps(dispatch, props) {
   return {
@@ -105,6 +97,8 @@ function mapDispatchToProps(dispatch, props) {
     editPostRequest: (post) => dispatch(editPostRequest(props.params.cuid, post)),
   };
 }
+
+
 
 
 PostDetailPage.propTypes = {
