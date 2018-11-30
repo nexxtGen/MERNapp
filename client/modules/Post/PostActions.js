@@ -97,3 +97,15 @@ export function thumbUpRequest(cuid) {
   }
 }
 // Add votes functionality (thumbDown)
+export function thumbDown(cuid) {
+  return {
+    type: THUMB_DOWN,
+    cuid    
+  };
+}
+
+export function thumbDownRequest(cuid) {
+  return (dispatch) => {
+    return callApi(`posts/${cuid}/thumbDown`, 'put').then(() => dispatch(thumbDown(cuid)));
+  }
+}

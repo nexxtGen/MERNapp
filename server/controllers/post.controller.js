@@ -96,8 +96,20 @@ export function thumbUp(req, res) {
     console.log('ThumbUp po aktualizacji to: ' + post.votes);   
     if (err) {
       res.status(500).send(err);
-    } 
-    console.log('ThumbUp po aktualizacji to: ' + post.votes);   
+    }     
     res.json({ post });
+    console.log('ThumbUp od response to: ' + post.votes);   
+  });
+}
+
+//Add thumb down
+export function thumbDown(req, res) {
+  Post.findOneAndUpdate({ cuid: req.params.cuid }, { $inc: { votes: -1} }).exec((err, post) => {
+    console.log('ThumbDown po aktualizacji to: ' + post.votes);   
+    if (err) {
+      res.status(500).send(err);
+    }     
+    res.json({ post });
+    console.log('ThumbDown po response to: ' + post.votes);   
   });
 }

@@ -19,6 +19,7 @@ function PostListItem(props) {
       <p className={styles['post-action']}><a href="#" onClick={props.onDelete}><FormattedMessage id="deletePost" /></a></p>
       <p>votes: {props.post.votes}</p>
       <button onClick={props.onThumbUp}>ThumbUp</button>
+      <button onClick={props.onThumbDown}>ThumbDown</button>
       <hr className={styles.divider} />
     </div>
   );
@@ -35,6 +36,7 @@ PostListItem.propTypes = {
   }).isRequired,
   onDelete: PropTypes.func.isRequired,
   onThumbUp: PropTypes.func.isRequired,
+  onThumbDown: PropTypes.func.isRequired,
 };
 
 export default PostListItem;
