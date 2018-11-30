@@ -28,10 +28,10 @@ PostListItem.propTypes = {
   post: PropTypes.shape({
     name: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-    //votes: PropTypes.Int32.isRequired,
+    content: PropTypes.string.isRequired,    
     slug: PropTypes.string.isRequired,
     cuid: PropTypes.string.isRequired,
+    votes: PropTypes.number.isRequired,
   }).isRequired,
   onDelete: PropTypes.func.isRequired,
   onThumbUp: PropTypes.func.isRequired,

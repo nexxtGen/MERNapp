@@ -35,6 +35,7 @@ export function addPost(req, res) {
   newPost.title = sanitizeHtml(newPost.title);
   newPost.name = sanitizeHtml(newPost.name);
   newPost.content = sanitizeHtml(newPost.content);
+  newPost.votes = 0;
 
   newPost.slug = slug(newPost.title.toLowerCase(), { lowercase: true });
   newPost.cuid = cuid();
@@ -91,10 +92,12 @@ export function editPost(req, res) {
 
 //Add thumb up backend request/response
 export function thumbUp(req, res) {
-  Post.findOneAndUpdate({ cuid: req.params.cuid }, { $inc: { votes: 1 } }).exec((err, post) => {
+  Post.findOneAndUpdate({ cuid: req.params.cuid }, { $inc: { votes: 1} }).exec((err, post) => {
+    console.log('ThumbUp po aktualizacji to: ' + post.votes);   
     if (err) {
       res.status(500).send(err);
-    }
+    } 
+    console.log('ThumbUp po aktualizacji to: ' + post.votes);   
     res.json({ post });
   });
 }

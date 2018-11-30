@@ -8,7 +8,7 @@ function PostList(props) {
   return (
     <div className="listView">
       {
-        props.posts.map(post => (
+        props.posts.map(post => (          
           <PostListItem
             post={post}
             key={post.cuid}
@@ -20,7 +20,7 @@ function PostList(props) {
     </div>
   );
 }
-
+console.log('Posts cuid: ', )
 PostList.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
@@ -28,6 +28,7 @@ PostList.propTypes = {
     content: PropTypes.string.isRequired,
     slug: PropTypes.string.isRequired,
     cuid: PropTypes.string.isRequired,
+    //votes: PropTypes.number.isRequired, // added
   })).isRequired,
   handleDeletePost: PropTypes.func.isRequired,
   handleThumbUp: PropTypes.func.isRequired,
