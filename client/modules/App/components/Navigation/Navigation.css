@@ -1,0 +1,12 @@
+.container {
+    padding: 10px;
+    width: 100%;
+    background: rgb(163, 163, 163);
+    display: flex;
+    justify-content: center;      
+    
+}
+.link {
+    padding-right: 5px;
+    
+}
