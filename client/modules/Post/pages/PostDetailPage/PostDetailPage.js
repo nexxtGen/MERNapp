@@ -19,6 +19,7 @@ export class PostDetailPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoadning: true, //add
       name: this.props.post.name,
       title: this.props.post.title,
       content: this.props.post.content,      
@@ -37,6 +38,30 @@ export class PostDetailPage extends React.Component {
   handleEditPost = () => {
     this.props.toggleEditPost();
     this.props.editPostRequest(this.state);
+  }
+
+  //localStorage for content
+  componentWillMount() {
+    localStorage.getItem('content') && this.setState({
+      content: JSON.parse(localStorage.getItem('content')),
+      isLoadning: false
+    })
+  }
+
+  componentDidMount(){
+    if (!localStorage.getItem('content')) {
+      this.fetchData();
+    } else {
+      console.log('Using data from localStorage');
+    }
+  }
+
+  fetchData(){
+  }
+
+  componentWillUpdate(nextProps, nextState) {    
+    localStorage.setItem('content', JSON.stringify(nextState.content));
+    localStorage.setItem('contentDate', Date.now());
   }
 
   renderPostForm() {

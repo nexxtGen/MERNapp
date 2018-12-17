@@ -25,7 +25,10 @@ export function addPostRequest(post) {
         content: post.content,
         votes: 0,
       },
-    }).then(res => dispatch(addPost(res.post)));
+    }).then(res => dispatch(addPost(res.post))
+    ).catch( err => {
+      console.log('addPostRequest error: ', err);            
+    });
   };
 }
 
@@ -40,13 +43,18 @@ export function fetchPosts() {
   return (dispatch) => {
     return callApi('posts').then(res => {
       dispatch(addPosts(res.posts));
+    }).catch( err => {
+      console.log('FetchPosts error: ', err);            
     });
   };
 }
 
 export function fetchPost(cuid) {
   return (dispatch) => {
-    return callApi(`posts/${cuid}`).then(res => dispatch(addPost(res.post)));
+    return callApi(`posts/${cuid}`).then(res => dispatch(addPost(res.post))
+    ).catch( err => {
+      console.log('FetchPost error: ', err);            
+    });
   };
 }
 
@@ -59,7 +67,10 @@ export function deletePost(cuid) {
 
 export function deletePostRequest(cuid) {
   return (dispatch) => {
-    return callApi(`posts/${cuid}`, 'delete').then(() => dispatch(deletePost(cuid)));
+    return callApi(`posts/${cuid}`, 'delete').then(() => dispatch(deletePost(cuid))
+    ).catch( err => {
+      console.log('updateLaneRequest error: ', err);            
+    });
   };
 }
 
@@ -80,7 +91,10 @@ export function editPostRequest(cuid, post) {
         title: post.title,
         content: post.content
       },
-    }).then(() => dispatch(editPost(cuid, post)));
+    }).then(() => dispatch(editPost(cuid, post))
+    ).catch( err => {
+      console.log('EditPostRequest error: ', err);            
+    });     
   };
 }
 // Add votes functionality (thumbUp)
@@ -93,7 +107,11 @@ export function thumbUp(cuid) {
 
 export function thumbUpRequest(cuid) {
   return (dispatch) => {
-    return callApi(`posts/${cuid}/thumbUp`, 'put').then(() => dispatch(thumbUp(cuid)));
+    return callApi(`posts/${cuid}/thumbUp`, 'put').then(() => {
+    dispatch(thumbUp(cuid))
+    }).catch( err => {
+      console.log('thumbUpreq error: ', err);            
+    });
   }
 }
 // Add votes functionality (thumbDown)
@@ -106,6 +124,9 @@ export function thumbDown(cuid) {
 
 export function thumbDownRequest(cuid) {
   return (dispatch) => {
-    return callApi(`posts/${cuid}/thumbDown`, 'put').then(() => dispatch(thumbDown(cuid)));
+    return callApi(`posts/${cuid}/thumbDown`, 'put').then(() => dispatch(thumbDown(cuid))
+    ).catch( err => {
+      console.log('thDownReq error: ', err);            
+    });
   }
 }

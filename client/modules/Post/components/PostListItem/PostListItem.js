@@ -7,17 +7,18 @@ import { FormattedMessage } from 'react-intl';
 import styles from './PostListItem.css';
 
 function PostListItem(props) {
+  const { slug, cuid, votes, title, content } = props.post;
   return (
     <div className={styles['single-post']}>
       <h3 className={styles['post-title']}>
-        <Link to={`/posts/${props.post.slug}-${props.post.cuid}`} >
-          {props.post.title}
+        <Link to={`/posts/${slug}-${cuid}`} >
+          {title}
         </Link>
       </h3>
-      <p className={styles['author-name']}><FormattedMessage id="by" /> {props.post.name}</p>
-      <p className={styles['post-desc']}>{props.post.content}</p>
+      <p className={styles['author-name']}><FormattedMessage id="by" /> {name}</p>
+      <p className={styles['post-desc']}>{content}</p>
       <p className={styles['post-action']}><a href="#" onClick={props.onDelete}><FormattedMessage id="deletePost" /></a></p>
-      <p>votes: {props.post.votes}</p>
+      <p>votes: {votes}</p>
       <button onClick={props.onThumbUp}>ThumbUp</button>
       <button onClick={props.onThumbDown}>ThumbDown</button>
       <hr className={styles.divider} />
